@@ -36,6 +36,9 @@ class CategoriesList extends StatelessWidget {
                   style: TextStyle(
                     fontSize: width * 0.04,
                   )),
+              onTap: (){
+                Navigator.pushNamed(context, '/detail');
+              },
             );
           },
           itemCount: categories.length,
@@ -44,22 +47,3 @@ class CategoriesList extends StatelessWidget {
     );
   }
 }
-
-//Column(
-//children: categories.map((cat) {
-//return ListTile(
-//contentPadding: EdgeInsets.symmetric(vertical: height * 0.01, horizontal: width * 0.02),
-//leading: cat.categoryIcon,
-//title: Text(
-//cat.categoryName,
-//style: TextStyle(
-//fontWeight: FontWeight.bold,
-//fontSize: width * 0.05),
-//),
-//trailing: Text('\$ ${cat.totalAmount.toString()}',
-//style: TextStyle(
-//fontSize: width * 0.04,
-//)),
-//);
-//}).toList(),
-//),

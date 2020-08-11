@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:avo_expenses/constants.dart';
 import '../widgets/user_transaction.dart';
 
-class ExpenseDetail extends StatelessWidget {
+class ExpenseDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
