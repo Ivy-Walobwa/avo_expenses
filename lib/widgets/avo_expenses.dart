@@ -1,16 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../models/categories.dart';
 import '../constants.dart';
 import '../widgets/categories_list.dart';
 import '../widgets/total_amount_spent.dart';
 
 class AvoExpenses extends StatelessWidget {
-  AvoExpenses({
-    @required this.categories,
-  }) ;
-
-  final List<Categories> categories;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +31,7 @@ class AvoExpenses extends StatelessWidget {
                 ],
               ),
             ),
-            CategoriesList(categories: categories)
+            CategoriesList()
           ],
         ),
       ),

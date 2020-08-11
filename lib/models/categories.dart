@@ -1,13 +1,15 @@
+import 'package:avo_expenses/models/transaction.dart';
 import 'package:flutter/cupertino.dart';
 
-class Categories{
+class Categories {
   final String categoryName;
   final Icon categoryIcon;
-  final double totalAmount;
+  double totalAmount;
+  final List<Transaction> transactionList;
 
-  Categories({
-    @required this.totalAmount,
-    @required this.categoryIcon,
-    @required this.categoryName});
-
+  Categories(
+      { this.totalAmount,
+      @required this.categoryIcon,
+      @required this.categoryName,
+      @required this.transactionList});
 }

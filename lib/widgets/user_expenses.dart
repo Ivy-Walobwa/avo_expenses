@@ -1,26 +1,9 @@
 import 'package:flutter/material.dart';
 import '../widgets/expense_date.dart';
-import '../models/categories.dart';
 import '../widgets/avo_expenses.dart';
 import '../widgets/avo_profile.dart';
 
 class UserExpenses extends StatelessWidget {
-  final List<Categories> categories = [
-    Categories(
-        totalAmount: 8420.0,
-        categoryIcon: Icon(Icons.shopping_cart),
-        categoryName: 'Shopping'),
-    Categories(
-        totalAmount: 700,
-        categoryIcon: Icon(Icons.fastfood),
-        categoryName: 'Fast Food'),
-    Categories(
-        totalAmount: 300,
-        categoryIcon: Icon(Icons.local_hospital),
-        categoryName: 'Health'),
-  ];
-
-
   //  String titleInput;
 //  String categoryInput;
 //  String amountInput;
@@ -53,7 +36,7 @@ class UserExpenses extends StatelessWidget {
             ],
           ),
         ),
-        AvoExpenses(categories: categories),
+        AvoExpenses(),
       ],
     );
   }
