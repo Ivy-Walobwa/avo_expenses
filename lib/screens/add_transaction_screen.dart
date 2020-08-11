@@ -49,10 +49,6 @@ class AddTransactionScreen extends StatelessWidget {
                   onChanged: (value) => newTxTitle = value,
                 ),
                 TextField(
-                  decoration: InputDecoration(labelText: 'amount'),
-                  onChanged: (val) => newTxAmount = double.parse(val),
-                ),
-                TextField(
                   decoration: InputDecoration(labelText: 'category'),
                   onChanged: (val) => newTxCategory = val,
                 ),
@@ -62,6 +58,12 @@ class AddTransactionScreen extends StatelessWidget {
 //                  icon: Icon(Icons.label, color: kgreenColor1,),
 //                  label: Text('Category'),
 //                ),
+                TextField(
+                  decoration: InputDecoration(labelText: 'amount'),
+                  onChanged: (val) => newTxAmount = double.parse(val),
+                  keyboardType: TextInputType.number,
+                ),
+
                 FlatButton.icon(
                   padding: EdgeInsets.all(0.0),
                   onPressed: () {},
@@ -81,7 +83,7 @@ class AddTransactionScreen extends StatelessWidget {
               'Add Transaction',
             ),
             onPressed: () {
-              if (newTxTitle == null) {
+              if (newTxTitle.isEmpty || newTxAmount < 0  || newTxCategory .isEmpty) {
                 Navigator.pop(context);
                 return;
               }

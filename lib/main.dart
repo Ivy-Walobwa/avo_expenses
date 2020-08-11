@@ -15,6 +15,8 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_)=> TransactionData(),
       child: MaterialApp(
+        title: 'Avo Expenses',
+
         initialRoute: '/',
         routes: {
           '/': (context)=> ExpensesScreen(),
