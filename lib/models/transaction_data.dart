@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 import '../models/categories.dart';
 import 'package:flutter/material.dart';
 import 'dart:collection';
 
 class TransactionData extends ChangeNotifier {
-
   final List<Categories> _categories = [
     Categories(
       totalAmount: 8420.0,
@@ -14,94 +14,96 @@ class TransactionData extends ChangeNotifier {
       transactionList: [],
     ),
     Categories(
-      totalAmount: 700,
-      categoryIcon: Icon(Icons.fastfood),
-      categoryName: 'Fast Food',
-      transactionList: []
-    ),
+        totalAmount: 700,
+        categoryIcon: Icon(Icons.fastfood),
+        categoryName: 'Fast Food',
+        transactionList: []),
     Categories(
-        totalAmount: 300,
-        categoryIcon: Icon(Icons.local_hospital),
-        categoryName: 'Health',
-        transactionList:  [
-          Transaction(
-            id: 't1',
-            title: 'Painkillers',
-            category: 'Health',
-            amount: 20.00,
-            date: DateTime.now(),
-          ),
-          Transaction(
-            id: 't2',
-            title: 'Weekly checkup',
-            category: 'Health',
-            amount: 150.00,
-            date: DateTime.now(),
-          )
-        ],
+      totalAmount: 300,
+      categoryIcon: Icon(Icons.local_hospital),
+      categoryName: 'Health',
+      transactionList: [
+        Transaction(
+          id: 't1',
+          title: 'Painkillers',
+          category: 'Health',
+          amount: 20.00,
+          date: DateTime.now(),
+        ),
+        Transaction(
+          id: 't2',
+          title: 'Weekly checkup',
+          category: 'Health',
+          amount: 150.00,
+          date: DateTime.now(),
+        )
+      ],
     ),
   ];
 
-  int get categoriesLength{
+  int get categoriesLength {
     return _categories.length;
   }
 
-int calculateTotalAmountSpent(){
-  var totalAmountSpent = 0.0;
+  int calculateTotalAmountSpent() {
+    var totalAmountSpent = 0.0;
 
-  _categories.forEach((cat) {
+    _categories.forEach((cat) {
       totalAmountSpent += cat.totalAmount;
     });
-  return totalAmountSpent.toInt();
-}
+    return totalAmountSpent.toInt();
+  }
 
-  int getTransactionsLength(category){
+  int getTransactionsLength(category) {
     var length;
 
     _categories.forEach((cat) {
-      if(cat.categoryName == category){
-        length= cat.transactionList.length;
-      }else{
+      if (cat.categoryName == category) {
+        length = cat.transactionList.length;
+      } else {
         length = 0;
       }
     });
     return length;
   }
 
-  UnmodifiableListView<Categories> get categories{
+  UnmodifiableListView<Categories> get categories {
     return UnmodifiableListView(_categories);
   }
 
-  UnmodifiableListView<Transaction> getTransactions(category){
+  UnmodifiableListView<Transaction> getTransactions(category) {
     var list;
     _categories.forEach((cat) {
-      if(cat.categoryName == category){
-       list = cat.transactionList;
-      }else{
+      if (cat.categoryName == category) {
+        list = cat.transactionList;
+      } else {
         list = [];
       }
     });
     return UnmodifiableListView(list);
   }
 
-  void addTransaction({String category, Icon icon, String title,double amount, DateTime date} ){
+  void addTransaction(
+      {String category,
+      Icon icon,
+      String title,
+      double amount,
+      DateTime date}) {
+    var foundCategory = _categories
+        .firstWhere((cat) => cat.categoryName == category, orElse: () => null);
 
-    var foundCategory = _categories.firstWhere((cat) => cat.categoryName == category, orElse: () => null);
-
-    if(foundCategory != null){
-
+    if (foundCategory != null) {
       foundCategory.totalAmount += amount;
 
       foundCategory.transactionList.add(Transaction(
-        id: DateTime.now().toString() ,
+        id: DateTime.now().toString(),
         amount: amount,
         title: title,
         category: category,
         date: DateTime.now(),
       ));
-    }else{
-      _categories.add(
-        Categories(
+    } else {
+      _categories.add(Categories(
           categoryName: category,
           totalAmount: amount,
           categoryIcon: icon,
@@ -113,12 +115,43 @@ int calculateTotalAmountSpent(){
               category: category,
               date: DateTime.now(),
             )
-          ]
-        )
-      );
+          ]));
     }
 
     calculateTotalAmountSpent();
     notifyListeners();
+  }
+
+  List<Map<String, Object>> getGroupedTransactionValues(recentTx) {
+    return List.generate(7, (index) {
+      final weekDay = DateTime.now().subtract(
+        Duration(days: index),
+      );
+      double sum;
+      for (var i = 0; i < recentTx.length; i++) {
+        if (recentTx[i].date.day == weekDay.day &&
+            recentTx[i].date.month == weekDay.month &&
+            recentTx[i].date.year == weekDay.year) {
+          sum += recentTx[i].amount;
+        }
+      }
+
+      print(DateFormat.E().format(weekDay));
+      print(sum);
+      return {'day': DateFormat.E().format(weekDay), 'amount': sum};
+    });
+  }
+
+  List<Transaction> getRecentTransactions( category) {
+
+
+      var recentTx = getTransactions(category);
+
+
+    return recentTx.where((tx) {
+      return tx.date.isAfter(DateTime.now().subtract(
+        Duration(days: 7),
+      ));
+    }).toList();
   }
 }
