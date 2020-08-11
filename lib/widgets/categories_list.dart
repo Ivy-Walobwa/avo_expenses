@@ -37,7 +37,9 @@ class CategoriesList extends StatelessWidget {
                         fontSize: width * 0.04,
                       )),
                   onTap: (){
-                    Navigator.pushNamed(context, '/detail');
+                    Navigator.pushNamed(context, '/detail', arguments: {
+                      'category': cat.categoryName
+                    });
                   },
                 );
               },

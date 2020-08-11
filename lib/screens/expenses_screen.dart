@@ -15,6 +15,7 @@ class ExpensesScreen extends StatelessWidget {
         child: Icon(Icons.add),
         onPressed: () {
           showModalBottomSheet(
+            backgroundColor: kgreenColor6,
               context: context,
               isScrollControlled: true,
               builder: (context) => SingleChildScrollView(

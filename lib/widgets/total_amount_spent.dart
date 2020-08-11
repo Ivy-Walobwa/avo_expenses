@@ -13,7 +13,7 @@ class TotalAmountSpent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              '\$ ${transactionData.totalAmountSpent}',
+              '\$ ${transactionData.calculateTotalAmountSpent()}',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 32.0,

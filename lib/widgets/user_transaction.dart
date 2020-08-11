@@ -1,30 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/transaction.dart';
 import '../widgets/chart_card.dart';
 import '../widgets/transaction_list.dart';
 
-class UserTransaction extends StatefulWidget {
-  @override
-  _UserTransactionState createState() => _UserTransactionState();
-}
-
-class _UserTransactionState extends State<UserTransaction> {
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Painkillers',
-      category: 'Health',
-      amount: 20.00,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Weekly checkup',
-      category: 'Health',
-      amount: 150.00,
-      date: DateTime.now(),
-    )
-  ];
+class UserTransaction extends StatelessWidget {
+  final String categoryName;
+  UserTransaction({this.categoryName});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +22,7 @@ class _UserTransactionState extends State<UserTransaction> {
               style:
               TextStyle(fontWeight: FontWeight.w600, fontSize: 32.0),
             )),
-        TransactionList(transactions: transactions)
+        TransactionList(category: categoryName)
       ],
     );
   }

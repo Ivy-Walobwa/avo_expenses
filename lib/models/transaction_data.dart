@@ -42,15 +42,18 @@ class TransactionData extends ChangeNotifier {
     ),
   ];
 
-  var _totalAmountSpent = 0.0;
-
-  int get totalAmountSpent{
-    return _totalAmountSpent.toInt();
-  }
-
   int get categoriesLength{
     return _categories.length;
   }
+
+int calculateTotalAmountSpent(){
+  var totalAmountSpent = 0.0;
+
+  _categories.forEach((cat) {
+      totalAmountSpent += cat.totalAmount;
+    });
+  return totalAmountSpent.toInt();
+}
 
   int getTransactionsLength(category){
     var length;
@@ -78,10 +81,10 @@ class TransactionData extends ChangeNotifier {
         list = [];
       }
     });
-    return list;
+    return UnmodifiableListView(list);
   }
 
-  void addTransaction(category, icon, title, amount, date ){
+  void addTransaction({String category, Icon icon, String title,double amount, DateTime date} ){
 
     var foundCategory = _categories.firstWhere((cat) => cat.categoryName == category, orElse: () => null);
 
@@ -114,6 +117,8 @@ class TransactionData extends ChangeNotifier {
         )
       );
     }
+
+    calculateTotalAmountSpent();
     notifyListeners();
   }
 }
